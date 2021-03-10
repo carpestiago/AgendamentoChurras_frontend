@@ -1,0 +1,9 @@
+.FormikField {
+    margin: 10px 0;
+    .MuiFormHelperText-root {
+        color: tomato;
+    }
+    .MuiInputBase-input {
+        border-top-color: tomato;
+    }
+}
