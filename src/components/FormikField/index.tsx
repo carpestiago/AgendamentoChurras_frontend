@@ -10,15 +10,21 @@ interface IFormikFieldProps {
     type?: string,
     disabled?: boolean,
     value?: any,
-    placeholder?: string
+    placeholder?: string,
+    multiline?: boolean,
+    rows?: number,
+    className?: string
 }
 
-const FormikField: React.FC<IFormikFieldProps> = ({label, name, type = 'text', disabled = false, value, placeholder} ) => {
+const FormikField: React.FC<IFormikFieldProps> = ({label, className, name, type = 'text', disabled = false, value, placeholder, multiline = false, rows} ) => {
     return(
         <div className='FormikField'>
             <Field
+                className={className}
                 as={TextField}
                 variant='outlined'
+                multiline={multiline}
+                rows={rows}
                 value={value}
                 name={name}
                 label={label}

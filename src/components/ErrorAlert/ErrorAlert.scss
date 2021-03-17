@@ -1,0 +1,47 @@
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index:2;
+  background: rgba(196, 196, 196, 0.56);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  
+};
+.error-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height:200px;
+  width: 300px;
+  border-radius: 2px;
+  background: #ffffff;
+  padding: 10px;
+  .btn-close { 
+    cursor: pointer;
+    display: flex;
+    margin-left: auto;
+    transform: scale(1.1);
+
+  };
+}
+.error-header {
+  display: flex;
+  .title-header {
+    color: tomato;
+    text-transform: uppercase;
+    font-size: 23px;
+    font-weight: bold;
+  }
+  svg {
+    margin-top: 2px;
+    margin-right: 5px;
+    color: tomato !important;
+  }
+}
+.error-text {
+  color:  #000;
+  margin-top: 40px;
+  font-weight: 600 !important;
+};

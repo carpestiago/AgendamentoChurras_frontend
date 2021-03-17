@@ -2,4 +2,10 @@
     input {
         text-align: right;
     }
+    .MuiFormHelperText-root {
+        color: tomato;
+    }
+    .MuiInputBase-input {
+        border-top-color: tomato;
+    }
 }

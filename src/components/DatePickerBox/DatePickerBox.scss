@@ -2,7 +2,12 @@
     min-height: 75px;
     width: 100%;
     
+    
     & button.MuiIconButton-root {
         padding: 0;
     }
+        .MuiFormHelperText-root {
+        color: tomato;
+    }
+
 }

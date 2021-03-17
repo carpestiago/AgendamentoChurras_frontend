@@ -2,9 +2,10 @@ import React from "react";
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import MaskedInput from 'react-text-mask'
 import { TextField, InputAdornment } from "@material-ui/core";
-import { MinimunEventCallBack } from "../../utils/commonProps";
+import {ErrorMessage, Field} from 'formik';
+import { MinimunEventCallBack } from "./../../utils/commonProps";
 
-import "../../utils/common.scss";
+import "./../../utils/commonProps";
 import "./NumberBox.scss";
 
 export interface INumberBoxProps {
@@ -189,7 +190,8 @@ export const NumberBox = React.forwardRef(({
             }}
             render={
                 (ref, inputProps) => 
-                <TextField 
+                <Field 
+                    as={TextField}
                     className="currency-box"
                     type={type}
                     id={name}
@@ -199,7 +201,7 @@ export const NumberBox = React.forwardRef(({
                     inputRef={ref}
                     disabled={disabled}
                     error={isInvalid}
-                    helperText={(isInvalid && errorMessage)}
+                    helperText={<ErrorMessage name={name}/>}
                     size={size}
                     variant="outlined"
                     InputProps={{
