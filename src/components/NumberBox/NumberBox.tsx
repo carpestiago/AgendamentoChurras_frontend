@@ -102,15 +102,15 @@ export const NumberBox = React.forwardRef(({
     const defaultMaskOptions = {
         prefix: '',
         suffix: '',
-        includeThousandsSeparator: true,
-        thousandsSeparatorSymbol: '.',
-        allowDecimal: !noDecimalValue,
+        // includeThousandsSeparator: true,
+    thousandsSeparatorSymbol: '.',
+        allowDecimal: true,
         decimalSymbol: ',',
-        decimalLimit: noDecimalValue ? 0 : 2, // how many digits allowed after the decimal
-        integerLimit, // limit length of integer numbers
+        decimalLimit: 2,
+        integerLimit: 7, // limit length of integer numbers
+        requireDecimal: true,
         allowNegative: false,
-        allowLeadingZeroes: true,
-        requireDecimal: false
+        allowLeadingZeroes: false,
     }
 
     const numberMask = createNumberMask(defaultMaskOptions);
@@ -120,16 +120,12 @@ export const NumberBox = React.forwardRef(({
     let cvalue: any = value;
     
     if (cvalue) {
-        if (noDecimalValue) {
-            cvalue = getBeforeCommaValues(cvalue);
-        }
-        else {
-            if (afterCommaAlwaysZero) {
-                cvalue = getBeforeCommaValues(cvalue);
-                cvalue = `${cvalue.toString()},00`;
-            }
-        }
-        cvalue = cvalue.toString().replace(/\./g, ",");
+            // if (afterCommaAlwaysZero) {
+            //     cvalue = getBeforeCommaValues(cvalue);
+            //     cvalue = `${cvalue.toString()},00`;
+            // }
+        
+        return cvalue = cvalue.toString().replace(/\./g, ",00");
     }
 
     return (
