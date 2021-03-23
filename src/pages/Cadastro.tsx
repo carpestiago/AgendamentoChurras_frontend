@@ -55,16 +55,12 @@ const initialValues = {
     valorTotal: undefined!
 }
 
-// const yesterday = new Date(Date.now() -86400000);
-
-
 const validationSchema = Yup.object().shape({
     nomeChurras: Yup.string().required('Nome do churras é obrigatório'),
     descricao: Yup.string().required('Descrição é obrigatória').max(140, 'Máximo 140 caracteres!'),
     valorTotal: Yup.mixed().required('Valor total é obrigatório')
 
 })
-
 
 export default function Cadastro(props: any) {
 
@@ -226,7 +222,6 @@ export default function Cadastro(props: any) {
                                         <div className='cadastro-valorTotal'>
                                             <div className='cadastro-form-label'>Valor Total</div>
                                             <NumberBox
-                                                size='small'
                                                 name='valorTotal'
                                                 prependText={'R$'}
                                                 value={stateValorTotal}

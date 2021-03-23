@@ -64,7 +64,7 @@ export const NumberBox = React.forwardRef(({
     onBlurCallback = null!
 }: INumberBoxProps, ref) => {
 
-    const getBeforeCommaValues = (_value: number): number => {
+    const getBeforeCommaValues = (_value: any): number => {
         let strValue = _value.toString();
 
         if (strValue.indexOf(".") > -1) {
@@ -76,21 +76,21 @@ export const NumberBox = React.forwardRef(({
         return _value;
     }
 
-    const handleMaxValue = (_value: number, valueIfError: number): number => {
+    const handleMaxValue = (_value: any, valueIfError: any): number => {
         if (maxValue && maxValue < _value) {
             return valueIfError;
         }
         return _value;
     }
 
-    const handleMinValue = (_value: number, valueIfError: number): number => {
+    const handleMinValue = (_value: any, valueIfError: any): number => {
         if (minValue && minValue > _value) {
             return valueIfError;
         }
         return _value;
     }
 
-    const getNumberFromValueString = (_value: string): number => {
+    const getNumberFromValueString = (_value: any): any => {
         if (_value.trim().substr(_value.trim().length-1, 1) === ",")
             return NaN;
         
@@ -102,15 +102,15 @@ export const NumberBox = React.forwardRef(({
     const defaultMaskOptions = {
         prefix: '',
         suffix: '',
-        // includeThousandsSeparator: true,
-    thousandsSeparatorSymbol: '.',
-        allowDecimal: true,
+        includeThousandsSeparator: true,
+        thousandsSeparatorSymbol: '.',
+        allowDecimal: !noDecimalValue,
         decimalSymbol: ',',
-        decimalLimit: 2,
-        integerLimit: 7, // limit length of integer numbers
-        requireDecimal: true,
+        decimalLimit: noDecimalValue ? 0 : 2, // how many digits allowed after the decimal
+        integerLimit, // limit length of integer numbers
         allowNegative: false,
-        allowLeadingZeroes: false,
+        allowLeadingZeroes: true,
+        requireDecimal: false
     }
 
     const numberMask = createNumberMask(defaultMaskOptions);
@@ -118,14 +118,17 @@ export const NumberBox = React.forwardRef(({
     //converte o value de javascript formato 128.45 para 128,45
     //  para a mask ser aplicada corretamente
     let cvalue: any = value;
-    
     if (cvalue) {
-            // if (afterCommaAlwaysZero) {
-            //     cvalue = getBeforeCommaValues(cvalue);
-            //     cvalue = `${cvalue.toString()},00`;
-            // }
-        
-        return cvalue = cvalue.toString().replace(/\./g, ",00");
+        if (noDecimalValue) {
+            cvalue = getBeforeCommaValues(cvalue);
+        }
+        else {
+            if (afterCommaAlwaysZero) {
+                cvalue = getBeforeCommaValues(cvalue);
+                cvalue = `${cvalue.toString()},00`;
+            }
+        }
+        cvalue = cvalue.toString().replace(/\./g, ",");
     }
 
     return (
@@ -133,7 +136,7 @@ export const NumberBox = React.forwardRef(({
             mask={numberMask} 
             value={cvalue}
             onBlur={(e) => {
-                let _value:any = getNumberFromValueString(e.target.value);
+                let _value = getNumberFromValueString(e.target.value);
                 
                 if (minValue || maxValue) {
                     // validação no Onblur...
