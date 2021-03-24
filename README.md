@@ -14,6 +14,7 @@ Abra [http://localhost:3000](http://localhost:3000) para ver no navegador.
 ## Funcionalidades
 
 ***MVP-1***
+
 Versão 1
 - Tela de login com validação dos campos de e-mail e senha.
 - Consulta à agenda de churrascos.
