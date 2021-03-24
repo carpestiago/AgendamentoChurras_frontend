@@ -64,7 +64,6 @@
             font-weight: bold;
             font-size: 21px;
             line-height: 25px;
-
         }
         
         .description-field {
@@ -159,15 +158,44 @@
                 }
             }
 
+            
             .cadastro-valorTotal {
-                margin-left: 50px;
+                width: 40%;
+                .number-box {
+                    height: 50px;
+                    margin-top: 27px;
+                    border: 1px solid #c4c4c4;
+                    border-radius: 3px;
+                    width: 100% !important;
+                }
+                input {
+                    font-size: 16px;
+                    padding-right: 15px;
+                    text-align: right;
+                }
+                input:focus {
+                    outline: none;
+                }
+                span {
+                    font-size: 19px !important;
+                    margin-top: 40px;
+                    margin-left: -245px;
+                    position: absolute;
+                }
+                .error-div {
+                    color: tomato;
+                    margin-left: 14px;
+                    font-size: 0.75rem;
+                    text-align: left;
+                    font-weight: 600;
+                    line-height: 2;
+                }
             }
             .MuiFormControl-root {
+                width: 100%;
+                
                 .MuiInputBase-root{
                     margin-top: 10px;
-                    width: 100%;
-                }
-                .MuiInputBase-root {
                     width: 100%;
                 }
             }
@@ -202,6 +230,7 @@
 
             .cadastro-valorTotal {
                 margin-left: 15px;
+                margin-top: 12px;
             }
 
             .MuiFormControl-root {
@@ -225,6 +254,13 @@
 
             .cadastro-valorTotal {
                 margin-left: unset !important;
+                width: 100% !important;
+                span {
+                    font-size: 19px !important;
+                    margin-top: 22px;
+                    margin-left: -88% !important;
+                    position: absolute;
+                }
             }
 
             .MuiFormControl-root {
@@ -238,6 +274,15 @@
         }
     }
 
+    @media(max-width: 565px) {
+        .column-datepicker-valueInput {
+            .cadastro-valorTotal {
+                span {
+                    margin-left: -85% !important;
+                }
+            }
+        }
+    }
     @media(max-width: 435px) {
 
         .cadastro-box-cards {

@@ -23,9 +23,8 @@ Abra [http://localhost:3000](http://localhost:3000) para ver no navegador.
 
 ## Débitos técnicos
 
-- Implementação de validação de data com a data atual.
 - Validação do componente de select de convidados.
-- Melhorar a implementação da máscara monetária no componente de valor total.
+- Implementação da máscara monetária no componente de valor total.
 - Melhorar as respostas de erro e implementar retornos de sucesso.
 - Implementar cadastro e autenticação de usuário.
 

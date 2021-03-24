@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import FormikField from './../components/FormikField/index'
-import DatePickerBox from './../components/DatePickerBox/DatePickerBox'
-import NumberBox from './../components/NumberBox/NumberBox';
-import { Formik, Form } from 'formik';
 import { 
     ListItemText, 
     Input,
@@ -12,16 +9,31 @@ import {
     FormControlLabel,
     MenuItem
 } from '@material-ui/core';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import ErrorAlert from './../components/ErrorAlert/index';
-import { useHistory } from 'react-router-dom';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import DateFnsUtils from '@date-io/date-fns';
+import { format } from "date-fns";
+import ptBrLocale from "date-fns/locale/pt-BR";
+import ErrorAlert from './../components/ErrorAlert/index';
+// import { mask, unMask } from 'remask';
+import { useHistory } from 'react-router-dom';
 import api from './../api';
 
 import './Cadastro.scss';
 
-let data = new Date();
-    const hoje = (data.getFullYear() + "-" + ((data.getMonth() + 1)) + "-" + (data.getDate())).toString();
+
+class LocalizedUtils extends DateFnsUtils {
+    getDatePickerHeaderText(date: any) {
+      return format(date, "d MMM yyyy", { locale: this.locale });
+    }
+}
+
+const hoje = new Date();
 
 export interface IFormikSelectItem {
     label: string,
@@ -35,7 +47,6 @@ interface ICadastroForm {
     data: string,
     valorTotal: number,
     obsAdd: string,
-
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,20 +61,17 @@ const useStyles = makeStyles((theme: Theme) =>
 const initialValues = {
     nomeChurras: '',
     descricao: '',
-    data: hoje,
+    data: format(new Date(hoje), "yyy-MM-dd"),
     obsAdd: '',
     valorTotal: undefined!
 }
 
 const validationSchema = Yup.object().shape({
     nomeChurras: Yup.string().required('Nome do churras é obrigatório'),
-    descricao: Yup.string().required('Descrição é obrigatória').max(140, 'Máximo 140 caracteres!'),
-    valorTotal: Yup.mixed().required('Valor total é obrigatório')
-
+    descricao: Yup.string().required('Descrição é obrigatória').max(140, 'Máximo 140 caracteres!')
 })
 
 export default function Cadastro(props: any) {
-
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -76,17 +84,16 @@ export default function Cadastro(props: any) {
     };
 
     let history = useHistory();
-
     const classes = useStyles();
 
     const [convidados, setConvidados] = useState<string[]>([]);
     const [listaUsuarios, setUsuarios] = useState<string[]>([]);
-    const [datepicker, setDatepicker] = useState<string>('');
-    const [stateValorTotal, setStateValorTotal] = useState<number>(null!);
+    const [datepicker, setDatepicker] = useState<any>(hoje);
+    const [stateValorTotal, setStateValorTotal] = useState<string>('');
     const [observacoesAdicionais, setObservacoesAdicionais] = useState<boolean>(false);
     const [modalAlertErro, setModalAlertErro] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<boolean>(false);
-    const [datePickerErrorMessage, setDatePickerErrorMessage] = useState<boolean>(false);
+    const [valorTotalErrorMessage, setValorErrorMessage] = useState<boolean>(false);
 
     useEffect(() => {
         const getListaUsuarios = async () => {
@@ -103,7 +110,6 @@ export default function Cadastro(props: any) {
     }, [])
 
     const handleSubmit = (values: ICadastroForm): void => {
-        console.log('entrei')
         const part = convidados.length;
         const valorT = values.valorTotal
         const valorIndiv = valorT / part
@@ -207,29 +213,48 @@ export default function Cadastro(props: any) {
                                     <div className='column-datepicker-valueInput'>
                                         <div>
                                             <div className='cadastro-form-label'>Data do Churras</div>
-                                            <DatePickerBox
-                                                size='small'
-                                                name='data'
-                                                value={datepicker}
-                                                errorMessage={datePickerErrorMessage === true ? 'Data do churras é obrigatória' : undefined}
-                                                onChangeCallback={(e: any) => {
-                                                    formikProps.setFieldValue('data', e.target.value)
-                                                    setDatepicker(e.target.value);
-                                                    setDatePickerErrorMessage(false)
-                                                }}
-                                            />
+                                            <MuiPickersUtilsProvider utils={LocalizedUtils} locale={ptBrLocale}>
+                                                <KeyboardDatePicker
+                                                    name='data'
+                                                    inputVariant='outlined'
+                                                    disableToolbar
+                                                    variant="inline"
+                                                    format="d MMM yyyy"
+                                                    minDate={datepicker}
+                                                    minDateMessage='Tem que ser pelo menos hoje, cara'
+                                                    margin="normal"
+                                                    id="date-picker-inline"
+                                                    value={datepicker}
+                                                    onChange={(e: any) => {
+                                                        setDatepicker(e);
+
+                                                    }}
+                                                    KeyboardButtonProps={{
+                                                        'aria-label': 'change date',
+
+                                                    }}
+                                                    />
+                                            </MuiPickersUtilsProvider>
                                         </div>
                                         <div className='cadastro-valorTotal'>
                                             <div className='cadastro-form-label'>Valor Total</div>
-                                            <NumberBox
-                                                name='valorTotal'
-                                                prependText={'R$'}
-                                                value={stateValorTotal}
-                                                onChangeCallback={(e: any) => {
-                                                    formikProps.setFieldValue('valorTotal', e.target.value)
-                                                    setStateValorTotal(e.target.value)
-                                                }}
-                                            />
+                                                <input
+                                                    type='text'
+                                                    className='number-box'
+                                                    name='valorTotal'
+                                                    value={stateValorTotal}
+                                                    onChange={(e: any) => {
+                                                        let numberValue = parseFloat(e.target.value)
+                                                        formikProps.setFieldValue('valorTotal', numberValue)
+                                                        
+                                                        setStateValorTotal(e.target.value)
+                                                        setValorErrorMessage(false)
+                                                    }}
+
+                                                />
+                                                <span>R$</span>
+                                                <div className='error-div'>{valorTotalErrorMessage === true ? 'O valor do churras é obrigatório' : undefined}</div>
+                                            
                                         </div>
                                     </div>
                                     <div className='column-obsAdicionais'>
@@ -258,7 +283,7 @@ export default function Cadastro(props: any) {
                                         }
                                     </div>
                                     <div className='btn-cadastro'>
-                                        <button className='btn-entrar' type='submit' onClick={() => {datepicker === '' && setDatePickerErrorMessage(true)}}>
+                                        <button className='btn-entrar' type='submit' onClick={() => {stateValorTotal === '' && setValorErrorMessage(true)}}>
                                             Criar o Churras!
                                         </button>
                                     </div>
