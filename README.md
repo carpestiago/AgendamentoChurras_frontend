@@ -14,18 +14,20 @@ Abra [http://localhost:3000](http://localhost:3000) para ver no navegador.
 ## Funcionalidades
 
 ***MVP-1***
-
+Versão 1
 - Tela de login com validação dos campos de e-mail e senha.
 - Consulta à agenda de churrascos.
 - Consulta aos detalhes de determinado churrasco, como descrição, quantidade de convidados, o valor arrecadado, possibilidade de alterar opção por bebida por convidado e marcar convidados que já efetuaram o pagamento.
 - Cadastro de novo churrasco, com preenchimento dos campos de nome ou motivo do churrasco, descrição (com no máximo 140 caracteres), seleção de convidados, observações adicionais (opcional, ativado mediante clique em checkbox), data e valor do evento. Os campos apresentam validação de obrigatoriedade de preenchimento.
 - Toda a aplicação está responsiva até width = 375px.
 
+Versão 1.1
+- Melhorias no datepicker e no componente de valor total
+
 ## Débitos técnicos
 
 - Validação do componente de select de convidados.
 - Implementação da máscara monetária no componente de valor total.
-- Melhorar as respostas de erro e implementar retornos de sucesso.
 - Implementar cadastro e autenticação de usuário.
 
 ## Melhorias futuras
