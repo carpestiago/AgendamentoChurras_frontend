@@ -15,7 +15,7 @@ Abra [http://localhost:3000](http://localhost:3000) para ver no navegador.
 
 ***MVP-1***
 
-Versão 1
+Versão 1.0
 - Tela de login com validação dos campos de e-mail e senha.
 - Consulta à agenda de churrascos.
 - Consulta aos detalhes de determinado churrasco, como descrição, quantidade de convidados, o valor arrecadado, possibilidade de alterar opção por bebida por convidado e marcar convidados que já efetuaram o pagamento.
