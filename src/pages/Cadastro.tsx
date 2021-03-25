@@ -153,7 +153,7 @@ export default function Cadastro(props: any) {
         });
     }
 
-  return (
+    return (
     <>
         {
             modalAlertErro && 
@@ -244,9 +244,7 @@ export default function Cadastro(props: any) {
                                                         const valorFormatado = formatISO(e);
                                                         const valorString = valorFormatado.toString();
                                                         formikProps.setFieldValue('data', valorString);
-
-
-
+                                                        
                                                     }}
                                                     KeyboardButtonProps={{
                                                         'aria-label': 'change date',
