@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {ReactComponent as MembersIcon} from './../resources/icon_people.svg'
 import {ReactComponent as BudgetIcon} from './../resources/icon_money.svg'
 import {ReactComponent as BarbecueIcon} from './../resources/icone-churras.svg'
-import {ReactComponent as TrincaIcon} from './../resources/icon-trinca.svg'
 import ErrorAlert from './../components/ErrorAlert/index';
 import { parseISO, format } from "date-fns";
 import api from './../api';
@@ -89,7 +88,6 @@ export default function Agenda(props: any) {
                         <span>Adicionar Churras</span>
                     </div>
                 </div>
-                <TrincaIcon className='icone-trinca' />
             </div>
         </>
     )
