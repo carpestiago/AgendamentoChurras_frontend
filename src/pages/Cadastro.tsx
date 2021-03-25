@@ -108,6 +108,7 @@ export default function Cadastro(props: any) {
     const [modalAlertErro, setModalAlertErro] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<boolean>(false);
     const [valorTotalErrorMessage, setValorErrorMessage] = useState<boolean>(false);
+    const [selectErrorMessage, setSelectErrorMessage] = useState<boolean>(false);
 
     useEffect(() => {
         const getListaUsuarios = async () => {
@@ -205,6 +206,7 @@ export default function Cadastro(props: any) {
                                                 onChange={
                                                     (event: React.ChangeEvent<{ value: any }>) => {
                                                         setConvidados(event.target.value as string[]);
+                                                        setSelectErrorMessage(false);
 
                                                     }
                                                 }
@@ -222,6 +224,7 @@ export default function Cadastro(props: any) {
                                                     ))
                                                 }
                                             </Select>
+                                            <div className='error-div'>{selectErrorMessage === true ? 'Convide pelo menos uma pessoa, pô!' : undefined}</div>
                                         </FormControl>
                                     </div>
                                     <div className='column-datepicker-valueInput'>
@@ -250,7 +253,7 @@ export default function Cadastro(props: any) {
                                                         'aria-label': 'change date',
 
                                                     }}
-                                                    />
+                                                />
                                             </MuiPickersUtilsProvider>
                                         </div>
                                         <div className='cadastro-valorTotal'>
@@ -299,7 +302,15 @@ export default function Cadastro(props: any) {
                                         }
                                     </div>
                                     <div className='btn-cadastro'>
-                                        <button className='btn-entrar' type='submit' onClick={() => {stateValorTotal === '' && setValorErrorMessage(true)}}>
+                                        <button 
+                                            className='btn-entrar' 
+                                            type='submit' 
+                                            onClick={() => {
+                                                stateValorTotal === '' && setValorErrorMessage(true)
+                                                convidados.length === 0 && setSelectErrorMessage(true)
+
+                                            }}
+                                        >
                                             Criar o Churras!
                                         </button>
                                     </div>

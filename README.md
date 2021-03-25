@@ -25,10 +25,10 @@ Versão 1.0
 Versão 1.1
 - Melhorias no datepicker e no componente de valor total.
 - Implementação da máscara monetária no componente de valor total.
+- Validação do componente de select de convidados.
 
 ## Débitos técnicos
 
-- Validação do componente de select de convidados.
 - Implementar cadastro e autenticação de usuário.
 
 ## Melhorias futuras
