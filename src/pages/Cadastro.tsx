@@ -17,10 +17,10 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import DateFnsUtils from '@date-io/date-fns';
-import { format } from "date-fns";
+import { format, formatISO } from "date-fns";
 import ptBrLocale from "date-fns/locale/pt-BR";
+import IntlCurrencyInput from "react-intl-currency-input"
 import ErrorAlert from './../components/ErrorAlert/index';
-// import { mask, unMask } from 'remask';
 import { useHistory } from 'react-router-dom';
 import api from './../api';
 
@@ -57,6 +57,20 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
+const currencyConfig = {
+    locale: "pt-BR",
+    formats: {
+      number: {
+        BRL: {
+          style: "currency",
+          currency: "BRL",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        },
+      },
+    },
+};
 
 const initialValues = {
     nomeChurras: '',
@@ -220,13 +234,18 @@ export default function Cadastro(props: any) {
                                                     disableToolbar
                                                     variant="inline"
                                                     format="d MMM yyyy"
-                                                    minDate={datepicker}
-                                                    minDateMessage='Tem que ser pelo menos hoje, cara'
+                                                    minDate={hoje}
                                                     margin="normal"
                                                     id="date-picker-inline"
                                                     value={datepicker}
                                                     onChange={(e: any) => {
                                                         setDatepicker(e);
+
+                                                        const valorFormatado = formatISO(e);
+                                                        const valorString = valorFormatado.toString();
+                                                        formikProps.setFieldValue('data', valorString);
+
+
 
                                                     }}
                                                     KeyboardButtonProps={{
@@ -238,21 +257,20 @@ export default function Cadastro(props: any) {
                                         </div>
                                         <div className='cadastro-valorTotal'>
                                             <div className='cadastro-form-label'>Valor Total</div>
-                                                <input
-                                                    type='text'
-                                                    className='number-box'
-                                                    name='valorTotal'
-                                                    value={stateValorTotal}
-                                                    onChange={(e: any) => {
-                                                        let numberValue = parseFloat(e.target.value)
-                                                        formikProps.setFieldValue('valorTotal', numberValue)
-                                                        
-                                                        setStateValorTotal(e.target.value)
-                                                        setValorErrorMessage(false)
-                                                    }}
-
-                                                />
-                                                <span>R$</span>
+                                            <IntlCurrencyInput
+                                                className='number-box'
+                                                name='valorTotal'
+                                                currency="BRL" 
+                                                config={currencyConfig} 
+                                                onChange={(e: any, value: any) => {
+                                                    let numberValue = parseFloat(value)
+                                                    formikProps.setFieldValue('valorTotal', numberValue)
+                                                 
+                                                    setStateValorTotal(e.target.value)
+                                                    stateValorTotal !== '' && setValorErrorMessage(false)
+                                                    
+                                                }} 
+                                            />
                                                 <div className='error-div'>{valorTotalErrorMessage === true ? 'O valor do churras é obrigatório' : undefined}</div>
                                             
                                         </div>

@@ -1,4 +1,4 @@
 /// <reference types="react-scripts" />
 
-//remask
-declare module 'remask';
+//react-intl-currency-input
+declare module 'react-intl-currency-input';

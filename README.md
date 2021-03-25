@@ -23,12 +23,12 @@ Versão 1.0
 - Toda a aplicação está responsiva até width = 375px.
 
 Versão 1.1
-- Melhorias no datepicker e no componente de valor total
+- Melhorias no datepicker e no componente de valor total.
+- Implementação da máscara monetária no componente de valor total.
 
 ## Débitos técnicos
 
 - Validação do componente de select de convidados.
-- Implementação da máscara monetária no componente de valor total.
 - Implementar cadastro e autenticação de usuário.
 
 ## Melhorias futuras
